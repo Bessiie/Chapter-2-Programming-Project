@@ -1,20 +1,42 @@
-// Chapter 2 Programming Project.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <limits>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+void clearinputs() {
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+int currentYear = 2025;
+float oceanlvlIncrease = 1.5;
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+int calcYearDiff()	{
+	int targetYear;
+	std::cout << "Enter target year for ocean level increase prediction.\n";
+
+	while (true) {
+		if (std::cin >> targetYear) {
+			if (targetYear >= currentYear) {
+				return targetYear - currentYear;
+			} else {
+				clearinputs();
+				std::cout << "Target year must be greater than current year. Please enter valid target year.\n";
+			}
+		} else {
+			clearinputs();
+			std::cout << "Invalid input. Please enter a valid year.\n";
+		}
+	}
+}
+
+float calcPredictedOceanLevel(int yearDifference) {
+	return yearDifference * oceanlvlIncrease;
+}
+
+int main() {
+	int yearDifference = calcYearDiff();
+	float predictedOceanLevel = calcPredictedOceanLevel(yearDifference);
+	std::cout << "The ocean level will be " << predictedOceanLevel
+		<< " cm higher than the current level in "
+		<< (currentYear + yearDifference) << "." << std::endl;
+	return 0;
+}
