@@ -1,20 +1,50 @@
-// Chapter 2 Programming Project.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+//This program will estimate the distance to be travel on a tank of gas
 
 #include <iostream>
+#include <string>
+#include <algorithm>
+#include <cctype>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+const int sizeTank = 20;
+const float cityMPG = 23.5;
+const float highwayMPG = 28.9;
+
+int inputTravelLocation() {
+	std::string travelLocation;
+	std::cout << "Are you traveling on 'City' roads or 'Highway' roads? \n"
+			<< "Type 'City' or 'Highway for max distance estimation.' \n"
+			<< "Type 'exit' to exit program.\n";
+	while (true) {
+		std::getline(std::cin, travelLocation);
+		std::transform(travelLocation.begin(), travelLocation.end(), travelLocation.begin(), ::tolower);
+		if (travelLocation == "city") {
+			return cityMPG;
+		}
+		else if (travelLocation == "highway") {
+			return highwayMPG;
+		}
+		else if (travelLocation == "exit") {
+			return -1;
+		}
+		else {
+			std::cout << "Invalid input. Please type 'city', 'highway' or 'exit'. \n";
+		}
+	}
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+float calculateDistance(float fuelEfficiency) {
+	return fuelEfficiency * sizeTank;
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+
+int main() {
+	while (true) {
+		float fuelEfficiency = inputTravelLocation();
+		if (fuelEfficiency == -1) {
+			break;
+		}
+		float maxDistance = calculateDistance(fuelEfficiency);
+		std::cout << "You can travel " << maxDistance << " miles before your engine explodes" << std::endl;
+	}
+	return 0;
+}
