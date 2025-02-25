@@ -1,9 +1,11 @@
 #include <iostream>
 
+//OceanlevelRisingRate
+float riseRate = 1.5;
 
 int main() {
-	float riseRate = 1.5;
 	
+	//Calculates and assigns the ocean level depending on years
 	float levelIn5Years = riseRate * 5;
 	float levelIn7Years = riseRate * 7;
 	float levelIn10Years = riseRate * 10;
